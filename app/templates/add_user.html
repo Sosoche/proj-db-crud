@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-header">
+        <h2>{% if request.endpoint == 'user.add_user' %}Add New User{% else %}Edit User{% endif %}</h2>
+    </div>
+    
+    <div class="form-card">
+        <form method="POST">
+            {{ form.csrf_token }}
+            
+            <div class="form-group">
+                {{ form.username.label }}
+                {{ form.username(class="form-control", placeholder="e.g. john_doe") }}
+                {% for error in form.username.errors %}
+                    <div class="error-msg">{{ error }}</div>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.email.label }}
+                {{ form.email(class="form-control", placeholder="john@example.com") }}
+                {% for error in form.email.errors %}
+                    <div class="error-msg">{{ error }}</div>
+                {% endfor %}
+            </div>
+            
+            <div class="form-footer">
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <a href="{{ url_for('user.index') }}" class="btn btn-outline">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
